@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Filled Heart Pattern</title>
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="heartCanvas"></canvas>
+
+  <script>
+    const canvas = document.getElementById("heartCanvas");
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    function hearta(k) {
+      return 15 * Math.sin(k) ** 3;
+    }
+    function heartb(k) {
+      return 12 * Math.cos(k) - 5 * Math.cos(2 * k) - 2 * Math.cos(3 * k) - Math.cos(4 * k);
+    }
+
+    let i = 0;
+    function draw() {
+      if (i < 12000) {  // more points for density
+        const k = i / 100; // finer step
+        const x = hearta(k) * 20 + canvas.width / 2;
+        const y = -heartb(k) * 20 + canvas.height / 2;
+
+        ctx.fillStyle = "rgba(255,0,0,0.6)"; // semi-transparent red
+        ctx.beginPath();
+        ctx.arc(x, y, 3, 0, Math.PI * 2); // slightly bigger dot
+        ctx.fill();
+
+        i++;
+        requestAnimationFrame(draw);
+      }
+    }
+
+    draw();
+  </script>
+</body>
+</html>
+
